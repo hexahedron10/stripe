@@ -18,8 +18,10 @@ class HomeScreen extends StatelessWidget {
           body: {
             'email': email,
             'amount': amount.toString(),
+            'currency': 'MXN', // Cambia 'eur' al código de la moneda deseada
           });
       final jsonResponse = jsonDecode(response.body);
+      print(jsonResponse);
       log(jsonResponse.toString());
       // 2. Initialize the payment sheet
       await Stripe.instance.initPaymentSheet(
@@ -62,7 +64,7 @@ class HomeScreen extends StatelessWidget {
         child: const Text('Pay 20\$'),
         onPressed: () async {
           await initPayment(
-              amount: 50.0, context: context, email: 'egdaniel10@hotmail.com');
+              amount: 5000, context: context, email: 'egdaniel10@hotmail.com');
         },
       )),
     );
