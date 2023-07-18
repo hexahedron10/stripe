@@ -21,7 +21,6 @@ class HomeScreen extends StatelessWidget {
             'currency': 'MXN', // Cambia 'eur' al código de la moneda deseada
           });
       final jsonResponse = jsonDecode(response.body);
-      print(jsonResponse);
       log(jsonResponse.toString());
       // 2. Initialize the payment sheet
       await Stripe.instance.initPaymentSheet(
@@ -30,9 +29,10 @@ class HomeScreen extends StatelessWidget {
         merchantDisplayName: 'Grocery Flutter course',
         customerId: jsonResponse['customer'],
         customerEphemeralKeySecret: jsonResponse['ephemeralKey'],
-        // testEnv: true,
-        //merchantCountryCode: 'SG',
+        testEnv: true,
+        merchantCountryCode: 'SG',
       ));
+      print(jsonResponse);
       await Stripe.instance.presentPaymentSheet();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
