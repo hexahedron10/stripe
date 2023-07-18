@@ -30,9 +30,10 @@ class HomeScreen extends StatelessWidget {
         merchantDisplayName: 'Grocery Flutter course',
         customerId: jsonResponse['customer'],
         customerEphemeralKeySecret: jsonResponse['ephemeralKey'],
-        // testEnv: true,
-        //merchantCountryCode: 'SG',
+        testEnv: true,
+        merchantCountryCode: 'SG',
       ));
+      print(jsonResponse);
       await Stripe.instance.presentPaymentSheet();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
