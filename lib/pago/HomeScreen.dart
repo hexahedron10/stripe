@@ -1,4 +1,3 @@
-/*
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -19,7 +18,7 @@ class HomeScreen extends StatelessWidget {
           body: {
             'email': email,
             'amount': amount.toString(),
-            'currency': 'MXN', // Cambia 'eur' al código de la moneda deseada
+            'currency': 'MXN'
           });
       final jsonResponse = jsonDecode(response.body);
       log(jsonResponse.toString());
@@ -72,8 +71,8 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-*/
 
+/*
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -326,3 +325,4 @@ class _HomeScreenState extends State<HomeScreen> {
     return calculatedAmout.toString();
   }
 }
+*/
