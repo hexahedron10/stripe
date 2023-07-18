@@ -30,7 +30,7 @@ class HomeScreen extends StatelessWidget {
         customerId: jsonResponse['customer'],
         customerEphemeralKeySecret: jsonResponse['ephemeralKey'],
         testEnv: true,
-        merchantCountryCode: 'SG',
+        merchantCountryCode: 'MX',
       ));
       print(jsonResponse);
       await Stripe.instance.presentPaymentSheet();
