@@ -1,3 +1,4 @@
+/*
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -71,8 +72,8 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+*/
 
-/*
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -211,12 +212,14 @@ class _HomeScreenState extends State<HomeScreen> {
       await createStripeCustomer();
 
       // se mada a llamar a la funcion para crear la intencion de pago
-      paymentIntent = await createPaymentIntent('30', 'MXN');
+      paymentIntent = await createPaymentIntent('50', 'MXN');
       //Payment Sheet
       await Stripe.instance
           .initPaymentSheet(
               paymentSheetParameters: SetupPaymentSheetParameters(
                   paymentIntentClientSecret: paymentIntent!['client_secret'],
+                  testEnv: true,
+                  merchantCountryCode: 'MX',
                   // applePay: const PaymentSheetApplePay(merchantCountryCode: '+92',),
                   // googlePay: const PaymentSheetGooglePay(testEnv: true, currencyCode: "US", merchantCountryCode: "+92"),
                   style: ThemeMode.dark,
@@ -323,4 +326,3 @@ class _HomeScreenState extends State<HomeScreen> {
     return calculatedAmout.toString();
   }
 }
-*/
