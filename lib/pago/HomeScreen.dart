@@ -21,6 +21,7 @@ class HomeScreen extends StatelessWidget {
           body: {'email': email, 'amount': amount.toString()});
       final jsonResponse = jsonDecode(response.body);
       print('jsonResponse: ${jsonResponse.toString()}');
+      print('que pasa: ${jsonResponse.toString()}');
       log(jsonResponse.toString());
       // 2. Initialize the payment sheet
       await Stripe.instance.initPaymentSheet(
