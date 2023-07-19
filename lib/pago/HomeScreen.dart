@@ -23,6 +23,8 @@ class HomeScreen extends StatelessWidget {
       final jsonResponse = jsonDecode(response.body);
       print(jsonResponse);
       log(jsonResponse.toString());
+      print(jsonResponse['currency']);
+      print(jsonResponse['amount']);
       // 2. Initialize the payment sheet
       await Stripe.instance.initPaymentSheet(
           paymentSheetParameters: SetupPaymentSheetParameters(
@@ -33,7 +35,6 @@ class HomeScreen extends StatelessWidget {
         testEnv: true,
         merchantCountryCode: 'MX',
       ));
-      print(jsonResponse);
       await Stripe.instance.presentPaymentSheet();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -72,7 +73,6 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-
 /*
 import 'dart:convert';
 import 'package:flutter/material.dart';
