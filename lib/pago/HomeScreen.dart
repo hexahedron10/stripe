@@ -17,8 +17,7 @@ class HomeScreen extends StatelessWidget {
               'https://us-central1-quiniela-6fadc.cloudfunctions.net/stripePaymentIntentRequest'),
           body: {
             'email': email,
-            'amount': amount.toString(),
-            'currency': 'mxn'
+            'amount': amount.toString()
           });
       final jsonResponse = jsonDecode(response.body);
       log(jsonResponse.toString());
