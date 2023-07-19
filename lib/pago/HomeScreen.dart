@@ -24,14 +24,12 @@ class HomeScreen extends StatelessWidget {
             'amount': amount.toString(),
           });
       final jsonResponse = jsonDecode(response.body);
-      print('que pasa: $jsonResponse');
       log(jsonResponse.toString());
       // 2. Initialize the payment sheet
       await Stripe.instance.initPaymentSheet(
           paymentSheetParameters: SetupPaymentSheetParameters(
         paymentIntentClientSecret: jsonResponse['paymentIntent'],
         merchantDisplayName: 'Qneza',
-        currencyCode: jsonResponse['currency'],
         customerId: jsonResponse['customer'],
         customerEphemeralKeySecret: jsonResponse['ephemeralKey'],
         testEnv: true,
