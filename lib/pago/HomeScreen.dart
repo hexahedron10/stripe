@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'dart:convert';
@@ -8,11 +7,8 @@ import 'dart:convert';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
   Future<void> initPayment(
-      {required String id,
-      required String name,
-      required String email,
+      {required String email,
       required double amount,
-      required String currency,
       required BuildContext context}) async {
     try {
       // 1. Create a payment intent on the server
@@ -22,6 +18,7 @@ class HomeScreen extends StatelessWidget {
           body: {
             'email': email,
             'amount': amount.toString(),
+            'currency': 'MXN'
           });
       final jsonResponse = jsonDecode(response.body);
       log(jsonResponse.toString());
@@ -35,6 +32,7 @@ class HomeScreen extends StatelessWidget {
         testEnv: true,
         merchantCountryCode: 'MX',
       ));
+      print(jsonResponse);
       await Stripe.instance.presentPaymentSheet();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -59,39 +57,17 @@ class HomeScreen extends StatelessWidget {
     }
   }
 
-//OBTENER LOS DATOS QUE ESTAN ALMACENAODS EN EL DISPOSITIVO
-  Future<List<String?>> obtenerDatos() async {
-    const storage = FlutterSecureStorage();
-    String? id = await storage.read(key: 'id');
-    String? name = await storage.read(key: 'name');
-    String? email = await storage.read(key: 'email');
-    String? token = await storage.read(key: 'token');
-    return [id, name, email, token];
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: ElevatedButton(
-          child: const Text('Pago 50'),
-          onPressed: () async {
-            List<String?> datos = await obtenerDatos();
-            String? id = datos[0];
-            String? name = datos[1];
-            String? email = datos[2];
-            // ignore: use_build_context_synchronously
-            await initPayment(
-              id: id!,
-              name: name!,
-              email: email!,
-              amount: 5000,
-              currency: 'MXN',
-              context: context,
-            );
-          },
-        ),
-      ),
+          child: ElevatedButton(
+        child: const Text('Pago 50'),
+        onPressed: () async {
+          await initPayment(
+              amount: 5000, context: context, email: 'egdaniel10@hotmail.com');
+        },
+      )),
     );
   }
 }
