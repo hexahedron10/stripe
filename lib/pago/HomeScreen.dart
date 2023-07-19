@@ -15,11 +15,7 @@ class HomeScreen extends StatelessWidget {
       final response = await http.post(
           Uri.parse(
               'https://us-central1-quiniela-6fadc.cloudfunctions.net/stripePaymentIntentRequest'),
-          body: {
-            'email': email,
-            'amount': amount.toString(),
-            'currency': 'MXN'
-          });
+          body: {'email': email, 'amount': amount.toString()});
       final jsonResponse = jsonDecode(response.body);
       log(jsonResponse.toString());
       // 2. Initialize the payment sheet
