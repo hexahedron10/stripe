@@ -12,6 +12,7 @@ class HomeScreen extends StatelessWidget {
       required String name,
       required String email,
       required double amount,
+      required String currency,
       required BuildContext context}) async {
     try {
       // 1. Create a payment intent on the server
@@ -21,18 +22,16 @@ class HomeScreen extends StatelessWidget {
           body: {
             'email': email,
             'amount': amount.toString(),
-            'currency': 'MXN',
           });
       final jsonResponse = jsonDecode(response.body);
-      print('jsonResponse: ${jsonResponse.toString()}');
-      print('que pasa: ${jsonResponse.toString()}');
+      print('que pasa: $jsonResponse');
       log(jsonResponse.toString());
       // 2. Initialize the payment sheet
       await Stripe.instance.initPaymentSheet(
           paymentSheetParameters: SetupPaymentSheetParameters(
         paymentIntentClientSecret: jsonResponse['paymentIntent'],
         merchantDisplayName: 'Qneza',
-        currencyCode: 'MXN',
+        currencyCode: jsonResponse['currency'],
         customerId: jsonResponse['customer'],
         customerEphemeralKeySecret: jsonResponse['ephemeralKey'],
         testEnv: true,
@@ -88,7 +87,8 @@ class HomeScreen extends StatelessWidget {
               id: id!,
               name: name!,
               email: email!,
-              amount: 50.0,
+              amount: 5000,
+              currency: 'MXN',
               context: context,
             );
           },
