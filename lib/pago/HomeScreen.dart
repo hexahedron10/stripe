@@ -20,6 +20,7 @@ class HomeScreen extends StatelessWidget {
               'https://us-central1-quiniela-6fadc.cloudfunctions.net/stripePaymentIntentRequest'),
           body: {'email': email, 'amount': amount.toString()});
       final jsonResponse = jsonDecode(response.body);
+      print('jsonResponse: ${jsonResponse.toString()}');
       log(jsonResponse.toString());
       // 2. Initialize the payment sheet
       await Stripe.instance.initPaymentSheet(
