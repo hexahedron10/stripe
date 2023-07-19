@@ -12,17 +12,14 @@ class HomeScreen extends StatelessWidget {
       required String name,
       required String email,
       required double amount,
+      required String currency,
       required BuildContext context}) async {
     try {
       // 1. Create a payment intent on the server
       final response = await http.post(
           Uri.parse(
               'https://us-central1-quiniela-6fadc.cloudfunctions.net/stripePaymentIntentRequest'),
-          body: {
-            'email': email,
-            'amount': amount.toString(),
-            'currency': 'MXN'
-          });
+          body: {'email': email, 'amount': amount.toString()});
       final jsonResponse = jsonDecode(response.body);
       log(jsonResponse.toString());
       // 2. Initialize the payment sheet
@@ -87,6 +84,7 @@ class HomeScreen extends StatelessWidget {
               name: name!,
               email: email!,
               amount: 5000,
+              currency: 'MXN',
               context: context,
             );
           },
