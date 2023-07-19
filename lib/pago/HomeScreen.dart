@@ -18,7 +18,11 @@ class HomeScreen extends StatelessWidget {
       final response = await http.post(
           Uri.parse(
               'https://us-central1-quiniela-6fadc.cloudfunctions.net/stripePaymentIntentRequest'),
-          body: {'email': email, 'amount': amount.toString()});
+          body: {
+            'email': email,
+            'amount': amount.toString(),
+            'currency': 'MXN',
+          });
       final jsonResponse = jsonDecode(response.body);
       print('jsonResponse: ${jsonResponse.toString()}');
       print('que pasa: ${jsonResponse.toString()}');
@@ -84,7 +88,7 @@ class HomeScreen extends StatelessWidget {
               id: id!,
               name: name!,
               email: email!,
-              amount: 5000,
+              amount: 50.0,
               context: context,
             );
           },
