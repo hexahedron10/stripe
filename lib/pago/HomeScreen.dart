@@ -12,7 +12,6 @@ class HomeScreen extends StatelessWidget {
       required String name,
       required String email,
       required double amount,
-      required String currency,
       required BuildContext context}) async {
     try {
       // 1. Create a payment intent on the server
@@ -28,7 +27,7 @@ class HomeScreen extends StatelessWidget {
           paymentSheetParameters: SetupPaymentSheetParameters(
         paymentIntentClientSecret: jsonResponse['paymentIntent'],
         merchantDisplayName: 'Qneza',
-        currencyCode: jsonResponse['currency'],
+        currencyCode: 'MXN',
         customerId: jsonResponse['customer'],
         customerEphemeralKeySecret: jsonResponse['ephemeralKey'],
         testEnv: true,
@@ -85,7 +84,6 @@ class HomeScreen extends StatelessWidget {
               name: name!,
               email: email!,
               amount: 5000,
-              currency: 'MXN',
               context: context,
             );
           },
