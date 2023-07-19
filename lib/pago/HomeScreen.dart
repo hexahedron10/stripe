@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'dart:convert';
@@ -7,7 +8,9 @@ import 'dart:convert';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
   Future<void> initPayment(
-      {required String email,
+      {required String id,
+      required String name,
+      required String email,
       required double amount,
       required BuildContext context}) async {
     try {
@@ -22,13 +25,12 @@ class HomeScreen extends StatelessWidget {
           });
       final jsonResponse = jsonDecode(response.body);
       log(jsonResponse.toString());
-      print(jsonResponse['currency']);
-      print(jsonResponse['amount']);
       // 2. Initialize the payment sheet
       await Stripe.instance.initPaymentSheet(
           paymentSheetParameters: SetupPaymentSheetParameters(
         paymentIntentClientSecret: jsonResponse['paymentIntent'],
         merchantDisplayName: 'Qneza',
+        currencyCode: jsonResponse['currency'],
         customerId: jsonResponse['customer'],
         customerEphemeralKeySecret: jsonResponse['ephemeralKey'],
         testEnv: true,
@@ -58,17 +60,38 @@ class HomeScreen extends StatelessWidget {
     }
   }
 
+//OBTENER LOS DATOS QUE ESTAN ALMACENAODS EN EL DISPOSITIVO
+  Future<List<String?>> obtenerDatos() async {
+    const storage = FlutterSecureStorage();
+    String? id = await storage.read(key: 'id');
+    String? name = await storage.read(key: 'name');
+    String? email = await storage.read(key: 'email');
+    String? token = await storage.read(key: 'token');
+    return [id, name, email, token];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-          child: ElevatedButton(
-        child: const Text('Pago 50'),
-        onPressed: () async {
-          await initPayment(
-              amount: 5000, context: context, email: 'egdaniel10@hotmail.com');
-        },
-      )),
+        child: ElevatedButton(
+          child: const Text('Pago 50'),
+          onPressed: () async {
+            List<String?> datos = await obtenerDatos();
+            String? id = datos[0];
+            String? name = datos[1];
+            String? email = datos[2];
+            // ignore: use_build_context_synchronously
+            await initPayment(
+              id: id!,
+              name: name!,
+              email: email!,
+              amount: 5000,
+              context: context,
+            );
+          },
+        ),
+      ),
     );
   }
 }
