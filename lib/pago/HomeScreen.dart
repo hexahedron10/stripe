@@ -18,7 +18,6 @@ class HomeScreen extends StatelessWidget {
           body: {
             'email': email,
             'amount': amount.toString(),
-            'currency': 'MXN'
           });
       final jsonResponse = jsonDecode(response.body);
       log(jsonResponse.toString());
