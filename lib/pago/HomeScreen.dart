@@ -19,36 +19,37 @@ class HomeScreen extends StatelessWidget {
             'email': email,
             'amount': amount.toString(),
           });
-
       final jsonResponse = jsonDecode(response.body);
       log(jsonResponse.toString());
       // 2. Initialize the payment sheet
       await Stripe.instance.initPaymentSheet(
           paymentSheetParameters: SetupPaymentSheetParameters(
         paymentIntentClientSecret: jsonResponse['paymentIntent'],
-        merchantDisplayName: 'Grocery Flutter course',
+        merchantDisplayName: 'Qneza',
         customerId: jsonResponse['customer'],
         customerEphemeralKeySecret: jsonResponse['ephemeralKey'],
         testEnv: true,
-        merchantCountryCode: 'SG',
+        merchantCountryCode: 'MX',
       ));
+      print(jsonResponse);
       await Stripe.instance.presentPaymentSheet();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Payment is successful'),
+          content: Text('El pago ha sido exitoso'),
         ),
       );
     } catch (errorr) {
       if (errorr is StripeException) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('An error occured ${errorr.error.localizedMessage}'),
+            content:
+                Text('ha ocurrido un error ${errorr.error.localizedMessage}'),
           ),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('An error occured $errorr'),
+            content: Text('ha ocurrido un error $errorr'),
           ),
         );
       }
@@ -60,10 +61,10 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: Center(
           child: ElevatedButton(
-        child: const Text('Pay 20\$'),
+        child: const Text('Pago 50'),
         onPressed: () async {
           await initPayment(
-              amount: 50.0, context: context, email: 'email@test.com');
+              amount: 5000, context: context, email: 'egdaniel10@hotmail.com');
         },
       )),
     );
