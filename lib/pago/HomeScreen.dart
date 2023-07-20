@@ -9,6 +9,7 @@ class HomeScreen extends StatelessWidget {
   Future<void> initPayment(
       {required String email,
       required double amount,
+      required String currency,
       required BuildContext context}) async {
     try {
       // 1. Create a payment intent on the server
@@ -18,6 +19,7 @@ class HomeScreen extends StatelessWidget {
           body: {
             'email': email,
             'amount': amount.toString(),
+            'currency': currency
           });
       final jsonResponse = jsonDecode(response.body);
       log(jsonResponse.toString());
@@ -28,6 +30,7 @@ class HomeScreen extends StatelessWidget {
         merchantDisplayName: 'Qneza',
         customerId: jsonResponse['customer'],
         customerEphemeralKeySecret: jsonResponse['ephemeralKey'],
+        currencyCode: 'eur',
         testEnv: true,
         merchantCountryCode: 'MX',
       ));
@@ -64,7 +67,10 @@ class HomeScreen extends StatelessWidget {
         child: const Text('Pago 50'),
         onPressed: () async {
           await initPayment(
-              amount: 5000, context: context, email: 'egdaniel10@hotmail.com');
+              amount: 5000,
+              context: context,
+              currency: 'eur',
+              email: 'egdaniel10@hotmail.com');
         },
       )),
     );
