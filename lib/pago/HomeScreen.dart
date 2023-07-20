@@ -8,7 +8,7 @@ class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
   Future<void> initPayment(
       {required String email,
-      required double amount,
+      required String amount,
       required String currency,
       required BuildContext context}) async {
     try {
@@ -67,7 +67,7 @@ class HomeScreen extends StatelessWidget {
         child: const Text('Pago 50'),
         onPressed: () async {
           await initPayment(
-              amount: 50.00,
+              amount: '50.00',
               context: context,
               currency: 'MXN',
               email: 'egdaniel10@hotmail.com');
