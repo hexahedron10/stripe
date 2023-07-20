@@ -19,7 +19,6 @@ class HomeScreen extends StatelessWidget {
           body: {
             'email': email,
             'amount': amount.toString(),
-            'currency': currency
           });
       final jsonResponse = jsonDecode(response.body);
       log(jsonResponse.toString());
@@ -30,7 +29,7 @@ class HomeScreen extends StatelessWidget {
         merchantDisplayName: 'Qneza',
         customerId: jsonResponse['customer'],
         customerEphemeralKeySecret: jsonResponse['ephemeralKey'],
-        currencyCode: 'eur',
+        currencyCode: 'mxn',
         testEnv: true,
         merchantCountryCode: 'MX',
       ));
@@ -69,7 +68,7 @@ class HomeScreen extends StatelessWidget {
           await initPayment(
               amount: 5000,
               context: context,
-              currency: 'eur',
+              currency: 'mxn',
               email: 'egdaniel10@hotmail.com');
         },
       )),
