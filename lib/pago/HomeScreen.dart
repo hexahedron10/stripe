@@ -8,7 +8,7 @@ class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
   Future<void> initPayment(
       {required String email,
-      required String amount,
+      required double amount,
       required String currency,
       required BuildContext context}) async {
     try {
@@ -18,7 +18,7 @@ class HomeScreen extends StatelessWidget {
               'https://us-central1-quiniela-6fadc.cloudfunctions.net/stripePaymentIntentRequest'),
           body: {
             'email': email,
-            'amount': calculateAmount(amount),
+            'amount': calculateAmount(amount as String),
             'currency': currency,
           });
       final jsonResponse = jsonDecode(response.body);
@@ -67,7 +67,7 @@ class HomeScreen extends StatelessWidget {
         child: const Text('Pago 50'),
         onPressed: () async {
           await initPayment(
-              amount: '50',
+              amount: 50.00,
               context: context,
               currency: 'MXN',
               email: 'egdaniel10@hotmail.com');
