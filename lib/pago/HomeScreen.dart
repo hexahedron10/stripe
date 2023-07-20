@@ -1,4 +1,4 @@
-import 'dart:developer';
+/*import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -21,6 +21,7 @@ class HomeScreen extends StatelessWidget {
             'currency': 'MXN',
           });
       final jsonResponse = jsonDecode(response.body);
+      print(jsonResponse);
       log(jsonResponse.toString());
       // 2. Initialize the payment sheet
       await Stripe.instance.initPaymentSheet(
@@ -71,7 +72,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-/*
+*/
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -324,4 +325,3 @@ class _HomeScreenState extends State<HomeScreen> {
     return calculatedAmout.toString();
   }
 }
-*/
