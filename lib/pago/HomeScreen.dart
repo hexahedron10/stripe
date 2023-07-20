@@ -27,6 +27,7 @@ class HomeScreen extends StatelessWidget {
         paymentIntentClientSecret: jsonResponse['paymentIntent'],
         merchantDisplayName: 'Qneza',
         customerId: jsonResponse['customer'],
+        currencyCode: 'MXN',
         customerEphemeralKeySecret: jsonResponse['ephemeralKey'],
         testEnv: true,
         merchantCountryCode: 'MX',
