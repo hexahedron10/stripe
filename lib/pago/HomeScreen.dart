@@ -1,4 +1,4 @@
-/*import 'dart:developer';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -8,7 +8,8 @@ class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
   Future<void> initPayment(
       {required String email,
-      required double amount,
+      required String amount,
+      required String currency,
       required BuildContext context}) async {
     try {
       // 1. Create a payment intent on the server
@@ -17,8 +18,8 @@ class HomeScreen extends StatelessWidget {
               'https://us-central1-quiniela-6fadc.cloudfunctions.net/stripePaymentIntentRequest'),
           body: {
             'email': email,
-            'amount': amount.toString(),
-            'currency': 'MXN',
+            'amount': calculateAmount(amount),
+            'currency': currency,
           });
       final jsonResponse = jsonDecode(response.body);
       print(jsonResponse);
@@ -66,13 +67,23 @@ class HomeScreen extends StatelessWidget {
         child: const Text('Pago 50'),
         onPressed: () async {
           await initPayment(
-              amount: 5000, context: context, email: 'egdaniel10@hotmail.com');
+              amount: '50',
+              context: context,
+              currency: 'MXN',
+              email: 'egdaniel10@hotmail.com');
         },
       )),
     );
   }
+
+  calculateAmount(String amount) {
+    final calculatedAmout = (int.parse(amount)) * 100;
+    return calculatedAmout.toString();
+  }
 }
-*/
+
+
+/*
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -325,3 +336,4 @@ class _HomeScreenState extends State<HomeScreen> {
     return calculatedAmout.toString();
   }
 }
+*/
