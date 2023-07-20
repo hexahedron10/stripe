@@ -9,7 +9,6 @@ class HomeScreen extends StatelessWidget {
   Future<void> initPayment(
       {required String email,
       required double amount,
-      required String currency,
       required BuildContext context}) async {
     try {
       // 1. Create a payment intent on the server
@@ -20,38 +19,36 @@ class HomeScreen extends StatelessWidget {
             'email': email,
             'amount': amount.toString(),
           });
+
       final jsonResponse = jsonDecode(response.body);
       log(jsonResponse.toString());
       // 2. Initialize the payment sheet
       await Stripe.instance.initPaymentSheet(
           paymentSheetParameters: SetupPaymentSheetParameters(
         paymentIntentClientSecret: jsonResponse['paymentIntent'],
-        merchantDisplayName: 'Qneza',
+        merchantDisplayName: 'Grocery Flutter course',
         customerId: jsonResponse['customer'],
         customerEphemeralKeySecret: jsonResponse['ephemeralKey'],
-        currencyCode: 'mxn',
         testEnv: true,
-        merchantCountryCode: 'MX',
+        merchantCountryCode: 'SG',
       ));
-      print(jsonResponse);
       await Stripe.instance.presentPaymentSheet();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('El pago ha sido exitoso'),
+          content: Text('Payment is successful'),
         ),
       );
     } catch (errorr) {
       if (errorr is StripeException) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content:
-                Text('ha ocurrido un error ${errorr.error.localizedMessage}'),
+            content: Text('An error occured ${errorr.error.localizedMessage}'),
           ),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('ha ocurrido un error $errorr'),
+            content: Text('An error occured $errorr'),
           ),
         );
       }
@@ -63,13 +60,10 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: Center(
           child: ElevatedButton(
-        child: const Text('Pago 50'),
+        child: const Text('Pay 20\$'),
         onPressed: () async {
           await initPayment(
-              amount: 5000,
-              context: context,
-              currency: 'mxn',
-              email: 'egdaniel10@hotmail.com');
+              amount: 50.0, context: context, email: 'email@test.com');
         },
       )),
     );
