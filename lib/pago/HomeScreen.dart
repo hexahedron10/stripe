@@ -65,7 +65,7 @@ class HomeScreen extends StatelessWidget {
         child: const Text('Pago 50'),
         onPressed: () async {
           await initPayment(
-              amount: 50, context: context, email: 'egdaniel10@hotmail.com');
+              amount: 50.00, context: context, email: 'egdaniel10@hotmail.com');
         },
       )),
     );
