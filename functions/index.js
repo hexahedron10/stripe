@@ -29,10 +29,9 @@ exports.stripePaymentIntentRequest = functions.https.onRequest(async (req, res) 
         );
 
         //Creates a new payment intent with amount passed in from the client
-        //no creo que hay que mover currency usd
         const paymentIntent = await stripe.paymentIntents.create({
             amount: parseInt(req.body.amount),
-            currency: 'usd',
+            currency: 'mxn',
             customer: customerId,
         })
 
