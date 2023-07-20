@@ -8,8 +8,7 @@ class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
   Future<void> initPayment(
       {required String email,
-      required String amount,
-      required String currency,
+      required double amount,
       required BuildContext context}) async {
     try {
       // 1. Create a payment intent on the server
@@ -18,11 +17,10 @@ class HomeScreen extends StatelessWidget {
               'https://us-central1-quiniela-6fadc.cloudfunctions.net/stripePaymentIntentRequest'),
           body: {
             'email': email,
-            'amount': calculateAmount(amount as String),
-            'currency': currency,
+            'amount': amount.toString(),
+            'currency': 'MXN'
           });
       final jsonResponse = jsonDecode(response.body);
-      print(jsonResponse);
       log(jsonResponse.toString());
       // 2. Initialize the payment sheet
       await Stripe.instance.initPaymentSheet(
@@ -67,22 +65,12 @@ class HomeScreen extends StatelessWidget {
         child: const Text('Pago 50'),
         onPressed: () async {
           await initPayment(
-              amount: '50.00',
-              context: context,
-              currency: 'MXN',
-              email: 'egdaniel10@hotmail.com');
+              amount: 50, context: context, email: 'egdaniel10@hotmail.com');
         },
       )),
     );
   }
-
-  calculateAmount(String amount) {
-    final calculatedAmout = (int.parse(amount)) * 100;
-    return calculatedAmout.toString();
-  }
 }
-
-
 /*
 import 'dart:convert';
 import 'package:flutter/material.dart';
