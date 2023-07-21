@@ -1,22 +1,43 @@
-/*
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'dart:convert';
 
 class HomeScreen extends StatelessWidget {
+  get id => null;
+
+//traigo la funcion para leer los datos del dispositivo
+  Future<List<String?>> obtenerDatos() async {
+    const storage = FlutterSecureStorage();
+    String? id = await storage.read(key: 'id');
+    String? name = await storage.read(key: 'name');
+    String? email = await storage.read(key: 'email');
+    String? token = await storage.read(key: 'token');
+    return [id, name, email, token];
+  }
+
   const HomeScreen({Key? key}) : super(key: key);
   Future<void> initPayment(
-      {required String email,
+      {required String id,
+      required String name,
+      required String email,
       required double amount,
       required BuildContext context}) async {
+    List<String?> datos = await obtenerDatos();
+    String? id = datos[0];
+    String? name = datos[1];
+    String? email = datos[2];
+
     try {
       // 1. Create a payment intent on the server
       final response = await http.post(
           Uri.parse(
               'https://us-central1-quiniela-6fadc.cloudfunctions.net/stripePaymentIntentRequest'),
           body: {
+            'customer': id,
+            'name': name,
             'email': email,
             'amount': amount.toString(),
           });
@@ -64,18 +85,23 @@ class HomeScreen extends StatelessWidget {
           child: ElevatedButton(
         child: const Text('Pago 50'),
         onPressed: () async {
+          List<String?> datos = await obtenerDatos();
+          String? id = datos[0];
+          String? name = datos[1];
+          String? email = datos[2];
+          // ignore: use_build_context_synchronously
           await initPayment(
-              amount: 5000, context: context, email: 'egdaniel10@hotmail.com');
+              id: id!,
+              name: name!,
+              amount: 5000,
+              context: context,
+              email: email!);
         },
       )),
     );
   }
 }
-*/
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
-
+/*
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -216,12 +242,17 @@ class _HomeScreenState extends State<HomeScreen> {
       // se mada a llamar a la funcion para crear la intencion de pago
       paymentIntent = await createPaymentIntent('50', 'MXN');
       //Payment Sheet
-      await Stripe.instance.initPaymentSheet(
-          paymentSheetParameters: SetupPaymentSheetParameters(
-              paymentIntentClientSecret: paymentIntent!['client_secret'],
-              customerId: paymentIntent!['customer'],
-              customerEphemeralKeySecret: paymentIntent!['ephemeralKey'],
-              merchantDisplayName: 'QNeza'));
+      await Stripe.instance
+          .initPaymentSheet(
+              paymentSheetParameters: SetupPaymentSheetParameters(
+                  paymentIntentClientSecret: paymentIntent!['client_secret'],
+                  //testEnv: true,
+                  //merchantCountryCode: 'MX',
+                  // applePay: const PaymentSheetApplePay(merchantCountryCode: '+92',),
+                  // googlePay: const PaymentSheetGooglePay(testEnv: true, currencyCode: "US", merchantCountryCode: "+92"),
+                  style: ThemeMode.dark,
+                  merchantDisplayName: 'QNeza'))
+          .then((value) {});
 
       ///now finally display payment sheeet
       displayPaymentSheet();
@@ -323,3 +354,4 @@ class _HomeScreenState extends State<HomeScreen> {
     return calculatedAmout.toString();
   }
 }
+*/
