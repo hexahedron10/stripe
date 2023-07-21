@@ -17,7 +17,9 @@ exports.stripePaymentIntentRequest = functions.https.onRequest(async (req, res) 
         }
         else {
             const customer = await stripe.customers.create({
-                email: req.body.email
+                email: req.body.email,
+                name : req.body.name,
+                name : req.body.id,
             });
             customerId = customer.data.id;
         }
@@ -30,7 +32,7 @@ exports.stripePaymentIntentRequest = functions.https.onRequest(async (req, res) 
 
         //Creates a new payment intent with amount passed in from the client
         const paymentIntent = await stripe.paymentIntents.create({
-            amount: 5000,//parseInt(req.body.amount),
+            amount: parseInt(req.body.amount),
             currency: 'mxn', 
             customer: customerId,
             automatic_payment_methods: {
