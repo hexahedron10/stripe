@@ -30,8 +30,8 @@ exports.stripePaymentIntentRequest = functions.https.onRequest(async (req, res) 
 
         //Creates a new payment intent with amount passed in from the client
         const paymentIntent = await stripe.paymentIntents.create({
-            amount: parseInt(req.body.amount),
-            currency: 'mxn',
+            amount: 5000,//parseInt(req.body.amount),
+            currency: 'mxn', 
             customer: customerId,
             automatic_payment_methods: {
                 enabled: true,
