@@ -4,7 +4,7 @@ const stripe = require("stripe")("sk_test_51NOUlkG7VB2W7Zzqa9R41MGdjwjOOzl1j5ceZ
 exports.stripePaymentIntentRequest = functions.https.onRequest(async (req, res) => {
     try {
         let customerId;
-        console.log('Moneda recibida:', req.body.currency);
+
         //Gets the customer who's email id matches the one sent by the client
         const customerList = await stripe.customers.list({
             email: req.body.email,
@@ -17,7 +17,7 @@ exports.stripePaymentIntentRequest = functions.https.onRequest(async (req, res) 
         }
         else {
             const customer = await stripe.customers.create({
-                email: req.body.email,
+                email: req.body.email
             });
             customerId = customer.data.id;
         }
@@ -25,18 +25,16 @@ exports.stripePaymentIntentRequest = functions.https.onRequest(async (req, res) 
         //Creates a temporary secret key linked with the customer 
         const ephemeralKey = await stripe.ephemeralKeys.create(
             { customer: customerId },
-            { apiVersion: '2022-11-15' }
+            { apiVersion: '2020-08-27' }
         );
 
         //Creates a new payment intent with amount passed in from the client
         const paymentIntent = await stripe.paymentIntents.create({
             amount: parseInt(req.body.amount),
-            currency: 'mxn', 
+            currency: 'mxn',
             customer: customerId,
-            automatic_payment_methods: {
-                enabled: true,
-              },
         })
+
         res.status(200).send({
             paymentIntent: paymentIntent.client_secret,
             ephemeralKey: ephemeralKey.secret,
