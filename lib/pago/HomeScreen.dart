@@ -1,3 +1,4 @@
+/*
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -70,7 +71,8 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-/*
+*/
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -215,8 +217,8 @@ class _HomeScreenState extends State<HomeScreen> {
           .initPaymentSheet(
               paymentSheetParameters: SetupPaymentSheetParameters(
                   paymentIntentClientSecret: paymentIntent!['client_secret'],
-                  testEnv: true,
-                  merchantCountryCode: 'MX',
+                  //testEnv: true,
+                  //merchantCountryCode: 'MX',
                   // applePay: const PaymentSheetApplePay(merchantCountryCode: '+92',),
                   // googlePay: const PaymentSheetGooglePay(testEnv: true, currencyCode: "US", merchantCountryCode: "+92"),
                   style: ThemeMode.dark,
@@ -323,4 +325,3 @@ class _HomeScreenState extends State<HomeScreen> {
     return calculatedAmout.toString();
   }
 }
-*/
