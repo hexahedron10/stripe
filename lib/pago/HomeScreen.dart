@@ -24,6 +24,7 @@ class HomeScreen extends StatelessWidget {
       required String name,
       required String email,
       required double amount,
+      required String currency,
       required BuildContext context}) async {
     List<String?> datos = await obtenerDatos();
     String? id = datos[0];
@@ -93,7 +94,8 @@ class HomeScreen extends StatelessWidget {
           await initPayment(
               id: id!,
               name: name!,
-              amount: 500,
+              amount: 300,
+              currency: 'MXN',
               context: context,
               email: email!);
         },

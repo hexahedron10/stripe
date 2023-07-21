@@ -8,8 +8,6 @@ exports.stripePaymentIntentRequest = functions.https.onRequest(async (req, res) 
         //Gets the customer who's email id matches the one sent by the client
         const customerList = await stripe.customers.list({
             email: req.body.email,
-            id: req.body.customer,
-            name: req.body.name,
             limit: 1
         });
                 
