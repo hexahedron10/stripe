@@ -93,7 +93,7 @@ class HomeScreen extends StatelessWidget {
           await initPayment(
               id: id!,
               name: name!,
-              amount: 5000,
+              amount: 500,
               context: context,
               email: email!);
         },
