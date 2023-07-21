@@ -72,6 +72,9 @@ class HomeScreen extends StatelessWidget {
   }
 }
 */
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 
 import 'dart:convert';
 import 'package:flutter/material.dart';
@@ -217,6 +220,8 @@ class _HomeScreenState extends State<HomeScreen> {
           .initPaymentSheet(
               paymentSheetParameters: SetupPaymentSheetParameters(
                   paymentIntentClientSecret: paymentIntent!['client_secret'],
+                  customerId: paymentIntent!['customer'],
+                  customerEphemeralKeySecret: paymentIntent!['ephemeralKey'],
                   //testEnv: true,
                   //merchantCountryCode: 'MX',
                   // applePay: const PaymentSheetApplePay(merchantCountryCode: '+92',),
