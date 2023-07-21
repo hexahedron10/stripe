@@ -216,19 +216,12 @@ class _HomeScreenState extends State<HomeScreen> {
       // se mada a llamar a la funcion para crear la intencion de pago
       paymentIntent = await createPaymentIntent('50', 'MXN');
       //Payment Sheet
-      await Stripe.instance
-          .initPaymentSheet(
-              paymentSheetParameters: SetupPaymentSheetParameters(
-                  paymentIntentClientSecret: paymentIntent!['client_secret'],
-                  customerId: paymentIntent!['customer'],
-                  customerEphemeralKeySecret: paymentIntent!['ephemeralKey'],
-                  //testEnv: true,
-                  //merchantCountryCode: 'MX',
-                  // applePay: const PaymentSheetApplePay(merchantCountryCode: '+92',),
-                  // googlePay: const PaymentSheetGooglePay(testEnv: true, currencyCode: "US", merchantCountryCode: "+92"),
-                  style: ThemeMode.dark,
-                  merchantDisplayName: 'QNeza'))
-          .then((value) {});
+      await Stripe.instance.initPaymentSheet(
+          paymentSheetParameters: SetupPaymentSheetParameters(
+              paymentIntentClientSecret: paymentIntent!['client_secret'],
+              customerId: paymentIntent!['customer'],
+              customerEphemeralKeySecret: paymentIntent!['ephemeralKey'],
+              merchantDisplayName: 'QNeza'));
 
       ///now finally display payment sheeet
       displayPaymentSheet();
