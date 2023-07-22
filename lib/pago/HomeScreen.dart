@@ -13,7 +13,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late String clientSecret;
+  String? clientSecret;
 
   Future<void> fetchPaymentIntent() async {
     final response = await http.post(
