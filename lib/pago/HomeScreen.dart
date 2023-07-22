@@ -1,3 +1,95 @@
+// ignore_for_file: library_private_types_in_public_api
+import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+import '../view/colores_plantilla.dart';
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  late String clientSecret;
+
+  Future<void> fetchPaymentIntent() async {
+    final response = await http.post(
+      Uri.parse('${GlobalVariables().host}/php_stripe.php'),
+      body: {'monto': '5000'}, // Coloca el monto que deseas cobrar en centavos
+    );
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      setState(() {
+        clientSecret = data['client_secret'];
+      });
+    } else {
+      throw Exception('Error al obtener el PaymentIntent.');
+    }
+  }
+
+  Future<void> iniciarPago() async {
+    try {
+      const url = 'https://api.stripe.com/v1/payment_intents';
+      final headers = {
+        'Authorization': 'Bearer tu_clave_secreta_de_stripe',
+        'Content-Type': 'application/x-www-form-urlencoded',
+      };
+      final body = {
+        'amount':
+            '1000', // El monto del pago en centavos (por ejemplo, 1000 para $10.00)
+        'currency':
+            'mxn', // La moneda que deseas utilizar (ejemplo: 'usd', 'eur', 'mxn', etc.)
+        'payment_method':
+            'pm_card_visa', // Id del método de pago, puedes utilizar una tarjeta de prueba de Stripe
+        'confirmation_method': 'automatic', // Método de confirmación automático
+        'confirm': 'true', // Confirmar automáticamente el pago
+        'client_secret': clientSecret, // El client_secret obtenido del servidor
+      };
+
+      final response =
+          await http.post(Uri.parse(url), headers: headers, body: body);
+      if (response.statusCode == 200) {
+        // El pago ha sido procesado exitosamente
+        print('Pago realizado con éxito.');
+      } else {
+        // Hubo un error al procesar el pago
+        print('Error al procesar el pago.');
+      }
+    } catch (e) {
+      // Manejo de errores
+      print('Error al procesar el pago: $e');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchPaymentIntent();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Stripe Payment'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          // ignore: unnecessary_null_comparison
+          onPressed: clientSecret == null ? null : iniciarPago,
+          child: const Text('Realizar pago'),
+        ),
+      ),
+    );
+  }
+}
+
+
+
+/*
 // ignore_for_file: file_names
 
 import 'dart:convert';
@@ -253,6 +345,15 @@ class _HomeScreenState extends State<HomeScreen> {
     return calculatedAmout.toString();
   }
 }
+
+*/
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+///77777777777777777//////////////////////////
+/////////////////////////////////////////////
+///
+///
 
 /*import 'dart:developer';
 import 'package:flutter/material.dart';
