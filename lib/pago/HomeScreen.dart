@@ -34,7 +34,8 @@ class _HomeScreenState extends State<HomeScreen> {
     try {
       const url = 'https://api.stripe.com/v1/payment_intents';
       final headers = {
-        'Authorization': 'Bearer tu_clave_secreta_de_stripe',
+        'Authorization':
+            'sk_test_51NOUlkG7VB2W7Zzqa9R41MGdjwjOOzl1j5ceZQ7htoe275gHeeDVvryFqDO5Jx8KowpiRUX9fDzjlboVaXYGVAF1002ZLAEbds',
         'Content-Type': 'application/x-www-form-urlencoded',
       };
       final body = {
