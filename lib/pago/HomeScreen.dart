@@ -148,7 +148,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   // applePay: const PaymentSheetApplePay(merchantCountryCode: '+92',),
                   // googlePay: const PaymentSheetGooglePay(testEnv: true, currencyCode: "US", merchantCountryCode: "+92"),
                   style: ThemeMode.dark,
-                  customFlow: true,
                   merchantDisplayName: 'QNeza'))
           .then((value) {});
 
